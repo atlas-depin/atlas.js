@@ -1,4 +1,4 @@
-[**atlas.js v0.2.0**](../README.md)
+[**atlas.js v0.1.2**](../README.md)
 
 ***
 
@@ -8,10 +8,10 @@
 
 > **TreeNode** = `AtlasTreeNode` & `object`
 
-Defined in: [src/types/atlas.ts:13](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/types/atlas.ts#L13)
+Defined in: [src/types/atlas.ts:13](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/types/atlas.ts#L13)
 
 ## Type Declaration
 
 ### encryption
 
-> **encryption**: `EncryptionType`
+> **encryption**: [`Privacy`](../enumerations/Privacy.md)

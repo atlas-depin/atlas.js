@@ -1,4 +1,4 @@
-[**atlas.js v0.2.0**](../README.md)
+[**atlas.js v0.1.2**](../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 # Interface: WalletInfo
 
-Defined in: [src/interfaces/wallet.ts:3](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/wallet.ts#L3)
+Defined in: [src/types/wallet.ts:12](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/types/wallet.ts#L12)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/interfaces/wallet.ts:3](https://github.com/Atlas-DePIN/atlas.js
 
 > **isAvailable**: `boolean`
 
-Defined in: [src/interfaces/wallet.ts:7](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/wallet.ts#L7)
+Defined in: [src/types/wallet.ts:16](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/types/wallet.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/interfaces/wallet.ts:7](https://github.com/Atlas-DePIN/atlas.js
 
 > **isInstalled**: `boolean`
 
-Defined in: [src/interfaces/wallet.ts:6](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/wallet.ts#L6)
+Defined in: [src/types/wallet.ts:15](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/types/wallet.ts#L15)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/interfaces/wallet.ts:6](https://github.com/Atlas-DePIN/atlas.js
 
 > **logo**: `string`
 
-Defined in: [src/interfaces/wallet.ts:5](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/wallet.ts#L5)
+Defined in: [src/types/wallet.ts:14](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/types/wallet.ts#L14)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/interfaces/wallet.ts:5](https://github.com/Atlas-DePIN/atlas.js
 
 > **name**: `string`
 
-Defined in: [src/interfaces/wallet.ts:4](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/wallet.ts#L4)
+Defined in: [src/types/wallet.ts:13](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/types/wallet.ts#L13)

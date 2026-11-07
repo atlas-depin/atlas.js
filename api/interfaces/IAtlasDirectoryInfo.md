@@ -1,4 +1,4 @@
-[**atlas.js v0.2.0**](../README.md)
+[**atlas.js v0.1.2**](../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 # Interface: IAtlasDirectoryInfo
 
-Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:3](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/IAtlasDirectoryInfo.ts#L3)
+Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:3](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/interfaces/IAtlasDirectoryInfo.ts#L3)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:3](https://github.com/Atlas-D
 
 > **dateCreated**: `number`
 
-Defined in: [src/interfaces/INodeContents.ts:4](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/INodeContents.ts#L4)
+Defined in: [src/interfaces/INodeContents.ts:4](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/interfaces/INodeContents.ts#L4)
 
 #### Inherited from
 
@@ -30,7 +30,7 @@ Defined in: [src/interfaces/INodeContents.ts:4](https://github.com/Atlas-DePIN/a
 
 > **dateUpdated**: `number`
 
-Defined in: [src/interfaces/INodeContents.ts:3](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/INodeContents.ts#L3)
+Defined in: [src/interfaces/INodeContents.ts:3](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/interfaces/INodeContents.ts#L3)
 
 #### Inherited from
 
@@ -42,7 +42,7 @@ Defined in: [src/interfaces/INodeContents.ts:3](https://github.com/Atlas-DePIN/a
 
 > **itemCount**: `number`
 
-Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:5](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/IAtlasDirectoryInfo.ts#L5)
+Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:5](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/interfaces/IAtlasDirectoryInfo.ts#L5)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:5](https://github.com/Atlas-D
 
 > **name**: `string`
 
-Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:4](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/IAtlasDirectoryInfo.ts#L4)
+Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:4](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/interfaces/IAtlasDirectoryInfo.ts#L4)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [src/interfaces/IAtlasDirectoryInfo.ts:4](https://github.com/Atlas-D
 
 > **owner**: `string`
 
-Defined in: [src/interfaces/INodeContents.ts:2](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/interfaces/INodeContents.ts#L2)
+Defined in: [src/interfaces/INodeContents.ts:2](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/interfaces/INodeContents.ts#L2)
 
 #### Inherited from
 

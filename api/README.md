@@ -1,13 +1,15 @@
-**atlas.js v0.2.0**
+**atlas.js v0.1.2**
 
 ***
 
-# atlas.js v0.2.0
+# atlas.js v0.1.2
 
 ## Enumerations
 
 - [ClientEvent](enumerations/ClientEvent.md)
 - [FileProcessingEvent](enumerations/FileProcessingEvent.md)
+- [Privacy](enumerations/Privacy.md)
+- [QueuedFileStatus](enumerations/QueuedFileStatus.md)
 - [StorageEvents](enumerations/StorageEvents.md)
 - [StorageHandlerEvent](enumerations/StorageHandlerEvent.md)
 - [WalletEvents](enumerations/WalletEvents.md)
@@ -16,12 +18,14 @@
 ## Classes
 
 - [AtlasClient](classes/AtlasClient.md)
-- [BaseWallet](classes/BaseWallet.md)
+- [CancellationException](classes/CancellationException.md)
+- [DirectoryLoadError](classes/DirectoryLoadError.md)
 - [FiletreeHelper](classes/FiletreeHelper.md)
+- [ProviderError](classes/ProviderError.md)
 - [QueryHelper](classes/QueryHelper.md)
 - [StorageHandler](classes/StorageHandler.md)
-- [UploadHelper](classes/UploadHelper.md)
-- [WalletManager](classes/WalletManager.md)
+- [StorageManager](classes/StorageManager.md)
+- [SubscriptionError](classes/SubscriptionError.md)
 
 ## Interfaces
 
@@ -37,8 +41,11 @@
 - [IFileUploadProgress](interfaces/IFileUploadProgress.md)
 - [IQueryHelper](interfaces/IQueryHelper.md)
 - [IQueuedFile](interfaces/IQueuedFile.md)
+- [IStorageHandler](interfaces/IStorageHandler.md)
+- [IStorageManager](interfaces/IStorageManager.md)
 - [QueryClient](interfaces/QueryClient.md)
 - [TxOptions](interfaces/TxOptions.md)
+- [UploadedFile](interfaces/UploadedFile.md)
 - [WalletInfo](interfaces/WalletInfo.md)
 
 ## Type Aliases

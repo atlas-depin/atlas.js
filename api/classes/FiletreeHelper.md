@@ -1,4 +1,4 @@
-[**atlas.js v0.2.0**](../README.md)
+[**atlas.js v0.1.2**](../README.md)
 
 ***
 
@@ -6,7 +6,7 @@
 
 # Class: FiletreeHelper
 
-Defined in: [src/filetree-helper.ts:12](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L12)
+Defined in: [src/filetree-helper.ts:11](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L11)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [src/filetree-helper.ts:12](https://github.com/Atlas-DePIN/atlas.js/
 
 > **new FiletreeHelper**(`client`): `FiletreeHelper`
 
-Defined in: [src/filetree-helper.ts:16](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L16)
+Defined in: [src/filetree-helper.ts:15](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L15)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/filetree-helper.ts:16](https://github.com/Atlas-DePIN/atlas.js/
 
 > `protected` `optional` **accessKey?**: `PrivateKey`
 
-Defined in: [src/filetree-helper.ts:14](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L14)
+Defined in: [src/filetree-helper.ts:13](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L13)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/filetree-helper.ts:14](https://github.com/Atlas-DePIN/atlas.js/
 
 > `protected` **client**: [`AtlasClient`](AtlasClient.md)
 
-Defined in: [src/filetree-helper.ts:13](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L13)
+Defined in: [src/filetree-helper.ts:12](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L12)
 
 ## Methods
 
@@ -48,7 +48,7 @@ Defined in: [src/filetree-helper.ts:13](https://github.com/Atlas-DePIN/atlas.js/
 
 > **createDirectory**(): `Promise`\<`EncodeObject`\>
 
-Defined in: [src/filetree-helper.ts:107](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L107)
+Defined in: [src/filetree-helper.ts:106](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L106)
 
 #### Returns
 
@@ -60,7 +60,7 @@ Defined in: [src/filetree-helper.ts:107](https://github.com/Atlas-DePIN/atlas.js
 
 > **createDrive**(`metadata`, `encryption?`): `Promise`\<`EncodeObject`\>
 
-Defined in: [src/filetree-helper.ts:56](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L56)
+Defined in: [src/filetree-helper.ts:55](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L55)
 
 Create a top-level drive node for the active account.
 
@@ -72,7 +72,7 @@ Create a top-level drive node for the active account.
 
 ##### encryption?
 
-`EncryptionType` = `EncryptionType.ENCRYPTED`
+[`Privacy`](../enumerations/Privacy.md) = `Privacy.ENCRYPTED`
 
 #### Returns
 
@@ -84,7 +84,7 @@ Create a top-level drive node for the active account.
 
 > **createFile**(`file`, `dir`): `Promise`\<`EncodeObject`\>
 
-Defined in: [src/filetree-helper.ts:87](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L87)
+Defined in: [src/filetree-helper.ts:86](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L86)
 
 #### Parameters
 
@@ -106,7 +106,7 @@ Defined in: [src/filetree-helper.ts:87](https://github.com/Atlas-DePIN/atlas.js/
 
 > **extractAesKey**(`permissions`): `Promise`\<`IAesBundle`\>
 
-Defined in: [src/filetree-helper.ts:153](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L153)
+Defined in: [src/filetree-helper.ts:152](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L152)
 
 Decrypt the AES bundle granted to the connected wallet.
 
@@ -126,7 +126,7 @@ Decrypt the AES bundle granted to the connected wallet.
 
 > **getTreeNode**(`path`, `owner?`): `Promise`\<[`TreeNode`](../type-aliases/TreeNode.md)\>
 
-Defined in: [src/filetree-helper.ts:40](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L40)
+Defined in: [src/filetree-helper.ts:39](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L39)
 
 #### Parameters
 
@@ -148,7 +148,7 @@ Defined in: [src/filetree-helper.ts:40](https://github.com/Atlas-DePIN/atlas.js/
 
 > **getTreeNodeChildren**(`path`, `owner?`): `Promise`\<[`TreeNode`](../type-aliases/TreeNode.md)[]\>
 
-Defined in: [src/filetree-helper.ts:25](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L25)
+Defined in: [src/filetree-helper.ts:24](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L24)
 
 #### Parameters
 
@@ -170,7 +170,7 @@ Defined in: [src/filetree-helper.ts:25](https://github.com/Atlas-DePIN/atlas.js/
 
 > **incrementDirectoryItemCount**(`path`, `delta`): `Promise`\<`EncodeObject`\>
 
-Defined in: [src/filetree-helper.ts:114](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L114)
+Defined in: [src/filetree-helper.ts:113](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L113)
 
 Build a replacement directory node with an adjusted child item count.
 
@@ -194,7 +194,7 @@ Build a replacement directory node with an adjusted child item count.
 
 > **setAccessKey**(`accessKey`): `Promise`\<`void`\>
 
-Defined in: [src/filetree-helper.ts:20](https://github.com/Atlas-DePIN/atlas.js/blob/69650d8e09f33d42ed4e3b3886bc77ab85f5ade6/src/filetree-helper.ts#L20)
+Defined in: [src/filetree-helper.ts:19](https://github.com/Atlas-DePIN/atlas.js/blob/3c81d31fe53b35ce6d420de26179cef52dd5035f/src/filetree-helper.ts#L19)
 
 #### Parameters
 
