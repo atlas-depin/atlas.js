@@ -58,7 +58,7 @@ export class StorageHandler {
   }
 
   /**
-   * Purchase a storage subscription for the active account or a receiver.
+   * Purchase a storage subscription for the active account.
    *
    * The minimum purchase is one gigabyte for one day.
    */
@@ -73,7 +73,6 @@ export class StorageHandler {
     const msgs: EncodeObject[] = [
       MessageComposer.MsgBuyStorage(
         this.client.address,
-        address,
         days,
         bytes,
         isDefault

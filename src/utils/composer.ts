@@ -87,7 +87,6 @@ export class MessageComposer {
 
   static MsgBuyStorage(
     creator: string,
-    receiver: string,
     days: number,
     bytes: number,
     isDefault: boolean
@@ -97,7 +96,6 @@ export class MessageComposer {
       typeUrl: MsgBuyStorage.typeUrl,
       value: MsgBuyStorage.fromPartial({
         creator,
-        receiver,
         duration: days,
         bytes,
         isDefault
