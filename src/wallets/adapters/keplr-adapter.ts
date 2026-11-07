@@ -4,7 +4,7 @@ import { WalletType } from '../../types/wallet';
 import { AtlasConfig } from '../../interfaces';
 
 import { BaseWallet } from '..';
-import { atlasDevnetChainConfig } from '../../utils/defaults';
+import { atlasTestnetChainConfig } from '../../utils/defaults';
 import { PubKey } from 'cosmjs-types/cosmos/crypto/secp256k1/keys';
 
 declare global {
@@ -42,7 +42,7 @@ export class KeplrWallet extends BaseWallet {
 
     try {
       // Enable Keplr for the chain
-      await this.keplr.experimentalSuggestChain(atlasDevnetChainConfig);
+      await this.keplr.experimentalSuggestChain(atlasTestnetChainConfig);
       await this.keplr.enable(this.config.chainId);
       
       // Get offline signer from Keplr
