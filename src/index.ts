@@ -18,7 +18,6 @@ export type {
   QueryClient,
   WalletInfo,
   TxOptions,
-  QueuedFileStatus,
 } from './types';
 
 export {
@@ -62,6 +61,7 @@ export { QueryHelper } from './query-helper';
 // ---------------------------------------------------------------------------
 
 export { WalletType } from './types/wallet';
+export { QueuedFileStatus } from './types/storage'
 export {
   ClientEvent,
   WalletEvents,

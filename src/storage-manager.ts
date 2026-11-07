@@ -299,7 +299,7 @@ export class StorageManager extends EventEmitter {
       nonce: Math.floor(Math.random() * 2_147_483_647),
       replicas: options.replicas ?? DEFAULT_REPLICAS,
       metadata: {},
-      status: 'idle',
+      status: QueuedFileStatus.IDLE,
     };
 
     this.queuedFiles.set(file.name, queuedFile);
@@ -320,7 +320,7 @@ export class StorageManager extends EventEmitter {
       replicas: options.replicas ?? DEFAULT_REPLICAS,
       metadata: {},
       encryption: options.encryption,
-      status: 'idle',
+      status: QueuedFileStatus.IDLE,
     };
 
     this.queuedFiles.set(file.name, queuedFile);
@@ -471,7 +471,7 @@ export class StorageManager extends EventEmitter {
     ];
 
     for (const [key, queued] of files) {
-      this.updateQueuedFileStatus(key, 'uploading');
+      this.updateQueuedFileStatus(key, QueuedFileStatus.UPLOADING);
       msgs.push(
         MessageComposer.MsgPostFile(
           queued.fid,
@@ -498,7 +498,7 @@ export class StorageManager extends EventEmitter {
 
     await Promise.all(
       files.map(async ([key, queued]) => {
-        this.updateQueuedFileStatus(key, 'uploading');
+        this.updateQueuedFileStatus(key, QueuedFileStatus.UPLOADING);
 
         if (provider) {
           // Specific provider mode -- try the same provider up to 3 times
@@ -527,7 +527,7 @@ export class StorageManager extends EventEmitter {
         const result = await UploadHelper.upload(hostname, queued.fid, queued.file);
 
         if (result.success) {
-          this.updateQueuedFileStatus(key, 'uploaded', 100);
+          this.updateQueuedFileStatus(key, QueuedFileStatus.UPLOADED, 100);
           this.queuedFiles.delete(key);
           return;
         }
@@ -542,7 +542,7 @@ export class StorageManager extends EventEmitter {
       this.updateQueuedFileProgress(key, 0);
     }
 
-    this.updateQueuedFileStatus(key, 'error');
+    this.updateQueuedFileStatus(key, QueuedFileStatus.ERROR);
     throw new Error(
       `Failed to upload file "${key}" to "${hostname}" after ${3} attempts: ${lastError?.message}`,
     );
@@ -568,7 +568,7 @@ export class StorageManager extends EventEmitter {
         const result = await UploadHelper.upload(provider.hostname, queued.fid, queued.file);
 
         if (result.success) {
-          this.updateQueuedFileStatus(key, 'uploaded', 100);
+          this.updateQueuedFileStatus(key, QueuedFileStatus.UPLOADED, 100);
           this.queuedFiles.delete(key);
           return;
         }
@@ -583,7 +583,7 @@ export class StorageManager extends EventEmitter {
       this.updateQueuedFileProgress(key, 0);
     }
 
-    this.updateQueuedFileStatus(key, 'error');
+    this.updateQueuedFileStatus(key, QueuedFileStatus.ERROR);
     throw new Error(
       `Failed to upload file "${key}" after ${tried.size} provider(s): ${lastError?.message}`,
     );
@@ -592,6 +592,7 @@ export class StorageManager extends EventEmitter {
   protected async processFile(fileKey: string): Promise<void> {
     const queuedFile = this.queuedFiles.get(fileKey);
     if (!queuedFile) throw new Error(`Queued file "${fileKey}" was not found.`);
+    if (queuedFile.status != QueuedFileStatus.IDLE) return;
 
     // Resolve progress scaling
     const progressBase = queuedFile.encryption ? 50 : 0;
@@ -602,7 +603,7 @@ export class StorageManager extends EventEmitter {
       if (queuedFile.encryption) {
         // Generate AES Key
         console.debug(`[ATLAS.JS] Encrypting "${fileKey}" (${queuedFile.file.size} bytes, chunkSize=${queuedFile.encryption.chunkSize ?? DEFAULT_ENCYRPTION_CHUNK_SIZE})`);
-        this.updateQueuedFileStatus(fileKey, 'encrypting');
+        this.updateQueuedFileStatus(fileKey, QueuedFileStatus.ENCRYPTING);
         queuedFile.encryption.aes = queuedFile.encryption.aes ?? (await generateAesKey());
 
         queuedFile.file = await encryptFile(queuedFile.file, queuedFile.encryption, (pct) => {
@@ -614,7 +615,7 @@ export class StorageManager extends EventEmitter {
       }
 
       /// --- Step 2: Build File Merkletree
-      this.updateQueuedFileStatus(fileKey, 'merkling', progressBase);
+      this.updateQueuedFileStatus(fileKey, QueuedFileStatus.MERKLING, progressBase);
       const tree = await buildMerkleTree(queuedFile.file, undefined, { onProgress: (progress) => {
           this.updateQueuedFileProgress(fileKey, progressBase + (progress / 100) * progressRange)}
       });
@@ -625,7 +626,7 @@ export class StorageManager extends EventEmitter {
       queuedFile.fid = await buildFid(queuedFile.merkleRoot, this.client.address, queuedFile.nonce);
       this.queuedFiles.set(fileKey, queuedFile);
 
-      this.updateQueuedFileStatus(fileKey, 'ready', 100);
+      this.updateQueuedFileStatus(fileKey, QueuedFileStatus.READY, 100);
       this.emit(FileProcessingEvent.READY, fileKey);
     } catch (error) {
       console.error(`[ATLAS.JS] Failed to process file "${fileKey}"`);
@@ -656,7 +657,7 @@ export class StorageManager extends EventEmitter {
     if (!this.queuedFiles.has(fileKey)) {
       return;
     }
-    this.updateQueuedFileStatus(fileKey, 'error', 0);
+    this.updateQueuedFileStatus(fileKey, QueuedFileStatus.ERROR, 0);
     this.emit(FileProcessingEvent.ERROR, fileKey, error);
   }
 

@@ -1,1 +1,9 @@
-export type QueuedFileStatus = 'idle' | 'encrypting' | 'merkling' | 'ready' | 'uploading' | 'uploaded' | 'error';
+export enum QueuedFileStatus {
+  IDLE = 'idle',
+  ENCRYPTING = 'encrypting',
+  MERKLING = 'merkling',
+  READY = 'ready',
+  UPLOADING = 'uploading',
+  UPLOADED = 'uploaded',
+  ERROR = 'error'
+}
