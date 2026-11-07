@@ -146,8 +146,8 @@ export class StorageManager extends EventEmitter {
         size: 0,
         isDefault: true,
       };
-      // this is ridiculous, Keplr sidebar mode bugs out and auto-rejects this tx because it happens before the previous sidebar closes. 
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // this is ridiculous, Keplr side-panel mode bugs out and auto-rejects this tx because it happens before the previous panel closes. 
+      await new Promise((resolve) => setTimeout(resolve, 250));
       const msg = await this.filetree.createDrive(metadata);
       await this.client.signAndBroadcast([msg], {
         gasAdjustment: 2,   // Dev Note: needed higher gas limit for this Tx. To investigate why.
