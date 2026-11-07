@@ -1,7 +1,7 @@
 // src/messages/composer.ts
 import { EncodeObject } from '@cosmjs/proto-signing';
-import { MsgPostFile, MsgDeleteFile, MsgBuyStorage } from 'atlas.js-protos/storage/tx';
-import { MsgDeleteNode, MsgPostNode } from 'atlas.js-protos/filetree/tx';
+import { MsgPostFile, MsgDeleteFile, MsgBuyStorage } from '@atlasdepin/atlas.js-protos/storage/tx';
+import { MsgDeleteNode, MsgPostNode } from '@atlasdepin/atlas.js-protos/filetree/tx';
 import { IReadAuthorityPackage } from '../interfaces';
 
 export class MessageComposer {

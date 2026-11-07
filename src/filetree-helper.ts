@@ -4,7 +4,7 @@ import { IAesBundle, IAtlasDirectoryInfo, IAtlasDriveInfo, IQueuedFile, IReadAut
 import { aesStringCrypt, exportAesBundle, generateAesKey, importAesBundle } from "./utils/crypto";
 import { Privacy, TreeNode } from "./types"
 import { MessageComposer } from "./utils/composer";
-import { EncodeObject } from "atlas.js-protos";
+import { EncodeObject } from "@atlasdepin/atlas.js-protos";
 import { buildFileNodeContents, joinPath, parseNodeContents } from "./utils/meta";
 
 

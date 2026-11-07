@@ -1,7 +1,7 @@
 import type { IAtlasDriveInfo, IDirectory, IFileUploadOptions } from "../../interfaces";
 import type { StorageEvents } from "../../types/events";
 
-import { Provider, StorageSubscription } from "atlas.js-protos/storage";
+import { Provider, StorageSubscription } from "@atlasdepin/atlas.js-protos/storage";
 
 export interface IStorageManager {
   get providers(): Provider[];

@@ -1,5 +1,5 @@
-import { File, Provider, StorageSubscription } from "atlas.js-protos/storage";
-import { TreeNode } from "atlas.js-protos/filetree";
+import { File, Provider, StorageSubscription } from "@atlasdepin/atlas.js-protos/storage";
+import { TreeNode } from "@atlasdepin/atlas.js-protos/filetree";
 import { FileStats, StorageStats } from "../../types";
 
 export interface IQueryHelper {

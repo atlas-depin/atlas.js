@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { PrivateKey } from "eciesjs";
-import { Provider, StorageSubscription } from "atlas.js-protos/storage";
+import { Provider, StorageSubscription } from "@atlasdepin/atlas.js-protos/storage";
 
 import { TreeNode, QueuedFileStatus } from "./types";
 import { FileProcessingEvent, StorageEvents, StorageHandlerEvent, WalletEvents } from "./types/events";
@@ -16,7 +16,7 @@ import { buildFid, hashAndHex } from "./utils/hash";
 
 import { AtlasClient } from "./atlas-client";
 import { FiletreeHelper } from "./filetree-helper";
-import { EncodeObject } from "atlas.js-protos";
+import { EncodeObject } from "@atlasdepin/atlas.js-protos";
 import { MessageComposer } from "./utils/composer";
 import { UploadHelper } from "./upload-helper";
 import { joinPath, parseNodeContents } from "./utils/meta";
@@ -134,7 +134,8 @@ export class StorageManager extends EventEmitter {
    * If no drives exist, creates a default "home" drive and navigates into it.
    * Otherwise loads the first drive marked as default.
    */
-  protected async loadAccount(): Promise<void> {
+  public async loadAccount(): Promise<void> {
+    if (this._subscription) return;
     await this.loadSubscription();
     await this.enableSigner();
 

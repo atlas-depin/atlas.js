@@ -18,6 +18,7 @@ export type {
   QueryClient,
   WalletInfo,
   TxOptions,
+  QueuedFileStatus,
 } from './types';
 
 export {

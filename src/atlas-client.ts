@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import { IndexedTx } from '@cosmjs/stargate';
-import { atlas } from 'atlas.js-protos';
+import { atlas } from '@atlasdepin/atlas.js-protos';
 
 import { 
   IAtlasClient,

@@ -1,6 +1,6 @@
-import { Query as BankQuery } from "atlas.js-protos/dist/types/cosmos/bank/v1beta1/query.rpc.Query";
-import { Query as FiletreeQuery } from "atlas.js-protos/dist/types/atlas/filetree/v1/query.rpc.Query";
-import { Query as StorageQuery } from "atlas.js-protos/dist/types/atlas/storage/v1/query.rpc.Query";
+import { Query as BankQuery } from "@atlasdepin/atlas.js-protos/dist/types/cosmos/bank/v1beta1/query.rpc.Query";
+import { Query as FiletreeQuery } from "@atlasdepin/atlas.js-protos/dist/types/atlas/filetree/v1/query.rpc.Query";
+import { Query as StorageQuery } from "@atlasdepin/atlas.js-protos/dist/types/atlas/storage/v1/query.rpc.Query";
 
 export enum WalletType {
   KEPLR = 'keplr',

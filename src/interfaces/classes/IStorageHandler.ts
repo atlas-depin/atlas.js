@@ -2,7 +2,7 @@ import type { IAesBundle, IEncryptionOptions } from "../../interfaces";
 import type { Privacy } from "../../types";
 import type { UploadedFile } from "../../storage-handler";
 
-import { Provider } from "atlas.js-protos/storage";
+import { Provider } from "@atlasdepin/atlas.js-protos/storage";
 
 export interface IStorageHandler {
   get providers(): Provider[];
