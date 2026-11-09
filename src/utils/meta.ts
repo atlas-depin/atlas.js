@@ -1,4 +1,5 @@
 import { IAtlasFileInfo, IQueuedFile } from "../interfaces";
+import { Privacy } from "../types";
 import { bytesToHex } from "./converters";
 
 export function parseNodeContents<T>(contents: string, path: string): T {
@@ -22,7 +23,7 @@ export function buildFileNodeContents(queuedFile: IQueuedFile, owner: string): I
     merkleRoot: bytesToHex(queuedFile.merkleRoot),
     dateUpdated: now,
     dateCreated: now,
-    encrypted: queuedFile.encryption !== undefined,
+    encryption: queuedFile.encryption !== undefined ? Privacy.ENCRYPTED : Privacy.PUBLIC,
     meta: {
       ...queuedFile.metadata,
       name: queuedFile.metadata?.name ?? file.name,

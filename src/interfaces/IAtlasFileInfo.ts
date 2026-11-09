@@ -3,7 +3,6 @@ import { INodeContents } from "./INodeContents"
 export interface IAtlasFileInfo extends INodeContents {
   fid: string
   merkleRoot: string
-  encrypted: boolean
   meta: IFileMetadata
 }
 

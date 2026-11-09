@@ -1,14 +1,15 @@
 import { EventEmitter } from "events";
 import { PrivateKey } from "eciesjs";
+import { nanoid } from "nanoid";
 import { Provider, StorageSubscription } from "@atlasdepin/atlas.js-protos/storage";
 
-import { TreeNode, QueuedFileStatus } from "./types";
+import { TreeNode, QueuedFileStatus, Privacy } from "./types";
 import { FileProcessingEvent, StorageEvents, StorageHandlerEvent, WalletEvents } from "./types/events";
 import { SubscriptionError, ProviderError } from "./types/errors";
 import { IAtlasDriveInfo, IAtlasDirectoryInfo, IDirectory, IQueuedFile, IFileUploadOptions, IAtlasFileInfo } from "./interfaces";
 
 import { DEFAULT_ENCYRPTION_CHUNK_SIZE, DEFAULT_REPLICAS } from "./utils/defaults";
-import { decryptFile, encryptFile, generateAesKey } from "./utils/crypto";
+import { aesStringCrypt, decryptFile, encryptFile, generateAesKey, importAesBundle } from "./utils/crypto";
 import { buildMerkleTree } from "./utils/merkle";
 import { SIGNER_SEED } from "./utils/constants";
 import { bytesToHex } from "./utils/converters";
@@ -207,8 +208,8 @@ export class StorageManager extends EventEmitter {
     const nextDirectory: IDirectory = {
       metadata: JSON.parse(node.contents) as IAtlasDirectoryInfo,
       path,
-      files: [],
-      subdirs: [],
+      files: {},
+      subdirs: {},
       objects: [],
     };
 
@@ -218,9 +219,12 @@ export class StorageManager extends EventEmitter {
     for (const [index, node] of children.entries()) {
       try {
         if (node.nodeType === 'directory') {
-          nextDirectory.subdirs.push(parseNodeContents<IAtlasDirectoryInfo>(node.contents, `${path}/children[${index}]:directory`));
+          let contents = parseNodeContents<IAtlasDirectoryInfo>(node.contents, `${path}/children[${index}]:directory`)
+          nextDirectory.subdirs[contents.id] = contents;
+
         } else if (node.nodeType === 'file') {
-          nextDirectory.files.push(parseNodeContents<IAtlasFileInfo>(node.contents, `${path}/children[${index}]:file`));
+          let contents = parseNodeContents<IAtlasFileInfo>(node.contents, `${path}/children[${index}]:file`)
+          nextDirectory.files[contents.fid] = contents;
         } else {
           nextDirectory.objects.push(node.contents);
         }
@@ -306,6 +310,32 @@ export class StorageManager extends EventEmitter {
   }
 
   /**
+   * Create a child directory under the supplied base path.
+   *
+   * Returns the transaction hash after reloading the parent directory.
+   */
+  public async createDirectory(name: string, encryptName: boolean = false, basepath: string = this._directory.path): Promise<string> {
+    const now = Date.now();
+    const metadata: IAtlasDirectoryInfo = {
+      id: nanoid(),
+      name,
+      itemCount: 0,
+      owner: this.client.address,
+      encryption: encryptName ? Privacy.ENCRYPTED : Privacy.PUBLIC,
+      dateUpdated: now,
+      dateCreated: now,
+    };
+
+    const msgs = [await this.filetree.createDirectory(metadata, basepath, encryptName ? Privacy.ENCRYPTED : Privacy.PUBLIC)]
+    if (basepath.includes("/")) msgs.unshift(await this.filetree.incrementDirectoryItemCount(basepath, 1))
+
+    const txResult = await this.client.signAndBroadcast(msgs);
+    await this.loadDirectory(joinPath(basepath, metadata.id));
+    return txResult.hash;
+  }
+ 
+
+  /**
    * Add a private (encrypted) file to the upload queue.
    *
    *
@@ -384,7 +414,7 @@ export class StorageManager extends EventEmitter {
     for (const provider of providers) {
       try {
         const rawFile = await this.downloadRaw(fid, provider, nodeContents.meta.name, fileMeta);
-        if (!nodeContents.encrypted) {
+        if (nodeContents.encryption == Privacy.PUBLIC) {
           return ensureNonEmptyFile(rawFile);
         }
 
@@ -437,11 +467,12 @@ export class StorageManager extends EventEmitter {
     if (fids.length === 0) throw new Error('No files specified for deletion.');
 
     const treeMsgs: EncodeObject[] = [
-      await this.filetree.incrementDirectoryItemCount(basepath, -fids.length),
       ...fids.map((fid) =>
         MessageComposer.MsgDeleteNode(this.client.address, joinPath(basepath, fid)),
       ),
     ];
+    if (basepath.includes("/")) treeMsgs.unshift(await this.filetree.incrementDirectoryItemCount(basepath, -fids.length))
+
     const deleteMsgs = fids.map((fid) =>
       MessageComposer.MsgDeleteFile(this.client.address, fid),
     );
@@ -466,9 +497,7 @@ export class StorageManager extends EventEmitter {
   }
 
   protected async commitAll(files: Array<[string, IQueuedFile]>, dir: string) {
-    const msgs: EncodeObject[] = [
-      await this.filetree.incrementDirectoryItemCount(dir, files.length),
-    ];
+    const msgs: EncodeObject[] = []
 
     for (const [key, queued] of files) {
       this.updateQueuedFileStatus(key, QueuedFileStatus.UPLOADING);
@@ -484,6 +513,7 @@ export class StorageManager extends EventEmitter {
       );
       msgs.push(await this.filetree.createFile(queued, dir))
     }
+    if (dir.includes("/")) msgs.unshift(await this.filetree.incrementDirectoryItemCount(dir, files.length))
 
     await this.client.signAndBroadcast(msgs);
   }
@@ -665,6 +695,7 @@ export class StorageManager extends EventEmitter {
     try {
       return JSON.parse(contents) as T;
     } catch (err: any) {
+      console.warn("Non-JSON content encountered.")
       // TODO: log warning using path
     }
   }

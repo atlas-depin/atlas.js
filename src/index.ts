@@ -33,7 +33,11 @@ export type {
   IFileUploadOptions,
   IFileUploadProgress,
   IEncryptionOptions,
+  IAesBundle
 } from './interfaces';
+
+export * from './utils/defaults'
+export * from './utils/crypto'
 
 // ---------------------------------------------------------------------------
 // Error types
@@ -54,6 +58,7 @@ export { AtlasClient } from './atlas-client';
 export { StorageManager } from './storage-manager';
 export { StorageHandler, UploadedFile } from './storage-handler';
 export { FiletreeHelper } from './filetree-helper';
+export { UploadHelper } from './upload-helper';
 export { QueryHelper } from './query-helper';
 
 // ---------------------------------------------------------------------------

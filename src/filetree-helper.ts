@@ -52,33 +52,16 @@ export class FiletreeHelper {
   /**
    * Create a top-level drive node for the active account.
    */
-  public async createDrive(metadata: IAtlasDriveInfo, encryption: Privacy = Privacy.ENCRYPTED): Promise<EncodeObject> {
+  public async createDrive(metadata: IAtlasDriveInfo): Promise<EncodeObject> {
     this.requireSigner();
-
-    let contents = JSON.stringify(metadata)
-    let readAuthorities = {}
-
-    switch (encryption) {
-      case Privacy.ENCRYPTED:
-        // Create a new AES key
-        const aes = await generateAesKey();
-        // Encrypt the drive name and contents
-        metadata.name = await aesStringCrypt(metadata.name, aes, "encrypt")
-        contents = await aesStringCrypt(contents, aes, "encrypt")
-        // Store AES key under viewers
-        readAuthorities = await this.addReadAuthority({}, this.client.address, aes)
-        break
-      default:
-        break
-    }
 
     // Create & broadcast PostNode Tx message
     return MessageComposer.MsgPostNode(
       this.client.address,
       metadata.name,
       'drive',
-      encryption + contents,
-      readAuthorities,
+      JSON.stringify(metadata),
+      {},
       []
     );
   }
@@ -103,8 +86,34 @@ export class FiletreeHelper {
     )
   }
 
-  public async createDirectory(): Promise<EncodeObject> {
-    throw Error("Not Implemented")
+  public async createDirectory(metadata: IAtlasDirectoryInfo, dir: string, encryption: Privacy = Privacy.ENCRYPTED): Promise<EncodeObject> {
+    this.requireSigner();
+
+    let contents = JSON.stringify(metadata)
+    let readAuthorities = {}
+
+    switch (encryption) {
+      case Privacy.ENCRYPTED:
+        // Create a new AES key
+        const aes = await generateAesKey();
+        // Encrypt the drive name and contents
+        contents = await aesStringCrypt(contents, aes, "encrypt")
+        // Store AES key under viewers
+        readAuthorities = await this.addReadAuthority({}, this.client.address, aes)
+        break
+      default:
+        break
+    }
+    
+    // Create & broadcast PostNode Tx message
+    return MessageComposer.MsgPostNode(
+      this.client.address,
+      joinPath(dir, metadata.id),
+      'directory',
+      contents,
+      readAuthorities,
+      []
+    );
   }
 
   /**
@@ -128,22 +137,22 @@ export class FiletreeHelper {
   }
 
   private async decryptTreeNode(node: TreeNode): Promise<TreeNode> {
-    switch (node.contents.slice(1)) {
-      case "1":
-        const aes = await this.extractAesKey(node.viewers)
-        node.contents = await aesStringCrypt(node.contents, aes, 'decrypt')
-        node.encryption = Privacy.ENCRYPTED
-        break
-      case "2":
-        // TODO: password-protected file
+    if (node.contents[0] !== "{") {
+      if (!node.viewers.includes(this.client.address)) {
         node.encryption = Privacy.PASSWORD_PROTECTED
-        break
-      case "0":
-      default:
-        node.encryption = Privacy.PUBLIC
-        break
+        return node
+      }
+
+      const aes = await this.extractAesKey(node.viewers)
+      node.contents = await aesStringCrypt(node.contents, aes, 'decrypt')
+      node.encryption = Privacy.ENCRYPTED
+      node.aesBundle = aes
     }
-    return node
+    else {
+      node.encryption = Privacy.PUBLIC
+    }
+
+    return node;
   }
 
   /**

@@ -5,7 +5,7 @@ export interface IDirectory {
   path: string
   metadata: IAtlasDirectoryInfo
 
-  files: IAtlasFileInfo[]
-  subdirs: IAtlasDirectoryInfo[]
+  files: { [ftName: string]: IAtlasFileInfo }
+  subdirs: { [ftName: string]: IAtlasDirectoryInfo }
   objects: string[]
 }
