@@ -302,7 +302,7 @@ export class StorageManager extends EventEmitter {
       merkleRoot: new Uint8Array(),
       nonce: Math.floor(Math.random() * 2_147_483_647),
       replicas: options.replicas ?? DEFAULT_REPLICAS,
-      metadata: {},
+      metadata: options.metadata ?? {},
       status: QueuedFileStatus.IDLE,
     };
 
@@ -348,7 +348,7 @@ export class StorageManager extends EventEmitter {
       merkleRoot: new Uint8Array(),
       nonce: Math.floor(Math.random() * 2_147_483_647),
       replicas: options.replicas ?? DEFAULT_REPLICAS,
-      metadata: {},
+      metadata: options.metadata ?? {},
       encryption: options.encryption,
       status: QueuedFileStatus.IDLE,
     };
@@ -619,7 +619,7 @@ export class StorageManager extends EventEmitter {
     );
   }
 
-  protected async processFile(fileKey: string): Promise<void> {
+  protected async processFile(fileKey: string, onProgress?: (progress: number) => void): Promise<void> {
     const queuedFile = this.queuedFiles.get(fileKey);
     if (!queuedFile) throw new Error(`Queued file "${fileKey}" was not found.`);
     if (queuedFile.status != QueuedFileStatus.IDLE) return;
@@ -637,7 +637,9 @@ export class StorageManager extends EventEmitter {
         queuedFile.encryption.aes = queuedFile.encryption.aes ?? (await generateAesKey());
 
         queuedFile.file = await encryptFile(queuedFile.file, queuedFile.encryption, (pct) => {
-          this.updateQueuedFileProgress(fileKey, pct / 2);
+          let realProgress = pct / 2;
+          this.updateQueuedFileProgress(fileKey, realProgress);
+          onProgress?.(realProgress)
         });
 
         console.debug(`[ATLAS.JS] Encrypted "${fileKey}" (${queuedFile.file.size} bytes)`);
@@ -647,7 +649,10 @@ export class StorageManager extends EventEmitter {
       /// --- Step 2: Build File Merkletree
       this.updateQueuedFileStatus(fileKey, QueuedFileStatus.MERKLING, progressBase);
       const tree = await buildMerkleTree(queuedFile.file, undefined, { onProgress: (progress) => {
-          this.updateQueuedFileProgress(fileKey, progressBase + (progress / 100) * progressRange)}
+          let realProgress = progressBase + (progress / 100) * progressRange
+          this.updateQueuedFileProgress(fileKey, realProgress)
+          onProgress?.(realProgress)
+        }  
       });
       queuedFile.merkleRoot = tree.root;
       this.emit(FileProcessingEvent.MERKLE_BUILT, fileKey, { merkleRoot: bytesToHex(queuedFile.merkleRoot) });
@@ -657,6 +662,7 @@ export class StorageManager extends EventEmitter {
       this.queuedFiles.set(fileKey, queuedFile);
 
       this.updateQueuedFileStatus(fileKey, QueuedFileStatus.READY, 100);
+      onProgress?.(100)
       this.emit(FileProcessingEvent.READY, fileKey);
     } catch (error) {
       console.error(`[ATLAS.JS] Failed to process file "${fileKey}"`);

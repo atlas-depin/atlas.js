@@ -29,8 +29,8 @@ export function buildFileNodeContents(queuedFile: IQueuedFile, owner: string): I
       name: queuedFile.metadata?.name ?? file.name,
       type: file.name.includes('.') ? file.name.split('.').pop()!.toLowerCase() : file.type,
       mime: file.type,
-      size: queuedFile.metadata?.size ?? file.size,
-      lastModified: queuedFile.metadata?.lastModified ?? file.lastModified,
+      size: file.size,
+      lastModified: file.lastModified,
     },
   };
 }
