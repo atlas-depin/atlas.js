@@ -66,7 +66,7 @@ export class FiletreeHelper {
     )
   }
 
-  public async deleteTreeNode(path: string, owner: string = this.client.address) {
+  public deleteTreeNode(path: string, owner: string = this.client.address) {
     return MessageComposer.MsgDeleteNode(owner, path)
   }
 
