@@ -38,6 +38,7 @@ export type {
 
 export * from './utils/defaults'
 export * from './utils/crypto'
+export * from './utils/composer'
 
 // ---------------------------------------------------------------------------
 // Error types

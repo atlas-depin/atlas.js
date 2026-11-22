@@ -49,6 +49,27 @@ export class FiletreeHelper {
     }
   }
 
+  public async createTreeNode(path: string, contents: any, aes?: IAesBundle, nodeType: string = 'object'): Promise<EncodeObject> {
+    let readAuthorities = {}
+    if (aes) {
+      contents = await aesStringCrypt(contents, aes, "encrypt")
+      readAuthorities = await this.addReadAuthority({}, this.client.address, aes)
+    }
+
+    return MessageComposer.MsgPostNode(
+      this.client.address,
+      path,
+      nodeType,
+      JSON.stringify(contents),
+      readAuthorities,
+      []
+    )
+  }
+
+  public async deleteTreeNode(path: string, owner: string = this.client.address) {
+    return MessageComposer.MsgDeleteNode(owner, path)
+  }
+
   /**
    * Create a top-level drive node for the active account.
    */
